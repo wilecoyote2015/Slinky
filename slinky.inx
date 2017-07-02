@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+  <_name>Slinky</_name>
+  <id>org.wilecoyote.filter.slinky</id>
+  <dependency type="executable" location="extensions">slinky.py</dependency>
+  <dependency type="executable" location="extensions">inkex.py</dependency>
+  <param name="Background" type="string" _gui-text="Name of background layer">Background</param>
+  <param name="TitleSlide" type="string" _gui-text="Name of title slide layer">Title</param>
+  <param name="OutputDirectory" type="string" _gui-text="Output Directory"></param>
+  <effect>
+    <object-type>all</object-type>
+    <effects-menu>
+    </effects-menu>
+  </effect>
+  <script>
+    <command reldir="extensions" interpreter="python">slinky.py</command>
+  </script>
+</inkscape-extension>
