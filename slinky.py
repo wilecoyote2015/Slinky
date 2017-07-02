@@ -16,7 +16,7 @@ from simplestyle import *
 
 # todo: export layers as single pdfs first and then merge them if this is possible. Is there a python lib for that?
 
-class HelloWorldEffect(inkex.Effect):
+class Slinky(inkex.Effect):
     """
     Example Inkscape effect extension.
     Creates a new layer with a "Hello World!" text centered in the middle of the document.
@@ -166,5 +166,5 @@ class HelloWorldEffect(inkex.Effect):
         os.remove(temp_filepath)
 
 # Create effect instance and apply it.
-effect = HelloWorldEffect()
+effect = Slinky()
 effect.affect()
