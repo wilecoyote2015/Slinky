@@ -10,6 +10,7 @@ import subprocess
 
 # We will use the inkex module with the predefined Effect base class.
 import inkex
+
 # The simplestyle module provides functions for style parsing.
 from simplestyle import *
 
@@ -44,42 +45,6 @@ class HelloWorldEffect(inkex.Effect):
         self.top_layers = None
 
     def effect(self):
-        # """
-        # Effect behaviour.
-        # Overrides base class' method and inserts "Hello World" text into SVG document.
-        # """
-        # # Get script's "--what" option value.
-        # what = self.options.what
-        #
-        # # Get access to main SVG document element and get its dimensions.
-        # svg = self.document.getroot()
-        # # or alternatively
-        # # svg = self.document.xpath('//svg:svg',namespaces=inkex.NSS)[0]
-        #
-        # # Again, there are two ways to get the attibutes:
-        # width  = self.unittouu(svg.get('width'))
-        # height = self.unittouu(svg.attrib['height'])
-        #
-        # # Create a new layer.
-        # layer = inkex.etree.SubElement(svg, 'g')
-        # layer.set(inkex.addNS('label', 'inkscape'), 'Hello %s Layer' % (what))
-        # layer.set(inkex.addNS('groupmode', 'inkscape'), 'layer')
-        #
-        # # Create text element
-        # text = inkex.etree.Element(inkex.addNS('text','svg'))
-        # text.text = 'Hello %s!' % (what)
-        #
-        # # Set text position to center of document.
-        # text.set('x', str(width / 2))
-        # text.set('y', str(height / 2))
-        #
-        # # Center text horizontally with CSS style.
-        # style = {'text-align' : 'center', 'text-anchor': 'middle'}
-        # text.set('style', formatStyle(style))
-        #
-        # # Connect elements together.
-        # layer.append(text)
-
         if not os.path.dirname(self.options.output_directory):
             inkex.errormsg(_('Please provide a valid output directory.'))
             exit()
@@ -154,16 +119,12 @@ class HelloWorldEffect(inkex.Effect):
             self.unhide_layer(background_layer)
 
     def unhide_layer(self, layer):
-        # todo: correct that way?
         layer.attrib.pop("style")
-
 
     def hide_layer(self, layer):
         layer.set("style", "display:none")
-        pass
 
     def get_all_subelements_of_element(self, element, subelement_name, namespace=None):
-        # todo: make this work?
         if namespace is not None:
             path = namespace + ":" + subelement_name
         else:
@@ -181,14 +142,10 @@ class HelloWorldEffect(inkex.Effect):
                 tspan.text = "$sn"
                 tspan.attrib.pop("slidenumber")
 
-
     def save_document_as_pdf(self, output_filepath):
         # create temporary directory
-        #temp_directory = tempfile.mkdtemp()
         temp_descriptor, temp_filepath = tempfile.mkstemp(suffix=".svg", text=True)
         temp_file = open(temp_filepath, 'w')
-
-
 
         # save the current svg to it
         xml_string = inkex.etree.tostring(self.document)
@@ -202,10 +159,9 @@ class HelloWorldEffect(inkex.Effect):
         return_code = p.wait()
         f = p.stdout
         err = p.stderr
-        # todo: debug message if something failes
+        # todo: debug message if something fails
 
         # delete the temp directory
-        #shutil.rmtree(temp_directory)
         os.close(temp_descriptor)
         os.remove(temp_filepath)
 
