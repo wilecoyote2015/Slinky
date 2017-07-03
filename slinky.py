@@ -1,31 +1,14 @@
 #!/usr/bin/env python
 
-# These two lines are only needed if you don't put the script directly into
-# the installation directory
 import sys
 import os
 import tempfile
 import shutil
 import subprocess
-
-# We will use the inkex module with the predefined Effect base class.
 import inkex
 
-# The simplestyle module provides functions for style parsing.
-from simplestyle import *
-
-# todo: export layers as single pdfs first and then merge them if this is possible. Is there a python lib for that?
-
 class Slinky(inkex.Effect):
-    """
-    Example Inkscape effect extension.
-    Creates a new layer with a "Hello World!" text centered in the middle of the document.
-    """
     def __init__(self):
-        """
-        Constructor.
-        Defines the "--what" option of a script.
-        """
         # Call the base class constructor.
         inkex.Effect.__init__(self)
 
