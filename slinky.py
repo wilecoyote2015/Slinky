@@ -116,8 +116,9 @@ class Slinky(inkex.Effect):
 
     def set_slide_number_in_layer(self, slide_layer, slide_number):
         for tspan in slide_layer.iter("{" + inkex.NSS["svg"] + "}tspan"):
-            tspan.text = str(slide_number)
-            tspan.set("slidenumber", str(slide_number))
+            if tspan.text == "$sn":
+                tspan.text = str(slide_number)
+                tspan.set("slidenumber", str(slide_number))
 
     def reset_slide_number_text(self, slide_layer):
         for tspan in slide_layer.iter("{" + inkex.NSS["svg"] + "}tspan"):
