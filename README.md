@@ -4,7 +4,7 @@ Slinky is an Inkscape extension for the creation of presentation slides as PDF f
 
 # Usage
 Your Inkscape document should be structured as described below (all without the parenthesis):
-* One layer per slide with as many sublayers as you like.
+* One layer per slide with as many sublayers as you like. The order is from Bottom to Top.
 * Optional: One layer named "Title", which will be the title slide. For this slide, the optionally defined Background is not visible in the exported pdf.
 * Optionally: One layer at the botton of the layer stack named "Background", which contains the background shown on all slides except the title slide.
 * You may insert the slide number by creating a text that contains only "$sn". On export, this will be replaced by the slide numbers.
