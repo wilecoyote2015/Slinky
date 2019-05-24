@@ -6,6 +6,7 @@ import tempfile
 import shutil
 import subprocess
 import inkex
+from PyPDF2 import PdfFileMerger
 
 class Slinky(inkex.Effect):
     def __init__(self):
@@ -34,14 +35,33 @@ class Slinky(inkex.Effect):
 
         self.top_layers = self.get_all_top_layers()
         slide_layers = self.get_slide_layers()
-
+        
+        paths_slides = []
         for index_slide_layer in range(len(slide_layers)):
             slide_layer = slide_layers[index_slide_layer]
-            self.export_slide_layer(slide_layer, index_slide_layer)
+            paths_slides.append(self.export_slide_layer(slide_layer, index_slide_layer))
 
         title_layer = self.get_top_layer_by_name(self.options.title_layer)
         if title_layer is not None:
-            self.export_slide_layer(title_layer, -1, show_background=False)
+            paths_slides.insert(0, self.export_slide_layer(title_layer, -1, show_background=False))
+
+        # merge the final pdf
+        # todo: make output name configurable
+        self.merge_slides(paths_slides)
+
+        # delete the files
+        for path_slide in paths_slides:
+            os.remove(path_slide)
+
+    def merge_slides(self, output_paths):
+        merger = PdfFileMerger()
+
+        for pdf in output_paths:
+            merger.append(pdf)
+
+        filename = "Presentation" + ".pdf"
+        output_path = os.path.join(self.options.output_directory, filename)
+        merger.write(output_path)
 
     def get_all_top_layers(self):
         svg = self.document.getroot()
@@ -81,6 +101,8 @@ class Slinky(inkex.Effect):
         self.reset_slide_number_text(slide_layer)
         if background_layer is not None:
             self.reset_slide_number_text(background_layer)
+
+        return output_path
 
     def hide_all_top_layers_except_current_slide(self, current_slide, show_background=True):
         self.hide_all_top_layers()
